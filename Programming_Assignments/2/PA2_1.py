@@ -16,6 +16,8 @@ Class - COSC 3100
 
 # 	return total
 
+
+# table for lookup
 table = {0: 0, 1: 1, 2: 1, 3: 2, 4: 1, 5: 2, 6: 2, 7: 3, 8: 1, 9: 2, 0xa: 2, 0xb: 3, 0xc: 2, 0xd: 3, 0xe: 3, 0xf: 4}
 
 # function that uses bitwise operations to determine number of 1 bits in number
