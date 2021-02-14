@@ -5,7 +5,7 @@ Author - Daniel Throop
 Class - COSC 3100
 """
 
-# table for lookup
+#table for lookup
 table = {0: 0xf, 1: 0xe, 2: 0xd, 3: 0xc, 4: 0xb, 5: 0xa, 6: 9, 7: 8, 8: 7, 9: 6, 0xa: 5, 0xb: 4, 0xc: 3, 0xd: 2, 0xe: 1, 0xf: 0}
 # translation = [0xf, 0xe, 0xd, 0xc, 0xb, 0xa, 9, 8, 7, 6, 5, 4, 3, 2, 1]
 
@@ -13,18 +13,15 @@ def invert(n):
 	final = 0
 	stack = []
 
+	# print(bin(n))
+
 	while(n != 0):
-		# mask 4 right-most bits
 		temp = n & 0xf
-		# lookup inverted version and 'push onto stack'
 		stack.append(table[temp])
-		# right shift by 4 bits
 		n = n >> 4 
 
 	for i in range(len(stack) - 1, -1, -1):
-		# left shift by 4 bits
 		final = final << 4
-		# OR stack element with final digit
 		final = final | stack[i]
 
 	return final
