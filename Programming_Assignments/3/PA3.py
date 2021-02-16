@@ -6,6 +6,12 @@ Class - COSC 3100
 
 """
 
+import time
+import math
+
+# data structure to hold execution times
+times = [0]*20 
+
 # BIBD conditions
 nr_blocks = 10
 pts_per_block = 3
@@ -23,25 +29,48 @@ def is_complete(blocks):
                 return False
     return True
 
-
-# def is_valid(blocks):
+# both conditions tested and working
+def is_valid(blocks):
+	# count data structures
 	elCount = [0]*nr_elements
+	pairs = {"12": 0, "13": 0, "14": 0, "15": 0, "16": 0, "23": 0, "24": 0, "25": 0, "26": 0, "34": 0, "35": 0, "36": 0, "45": 0, "46": 0, "56": 0}
 
 	# check that an element appears exactly 5 times in different blocks
 	for block in range(10):
 		for i in range(3):
-			#if the given position isn't a zero we want to investigate it
+			# if the given position isn't a zero we want to investigate it
 			if blocks[block][i] != 0:
-				#record that we have seen the element
+				# record that we have seen the element
 				elCount[(blocks[block][i]) - 1] += 1
 
-	# determine if the element counrt is valid
-	if 6 in elCount:
-		validity = False
-	else:
-		validity = True
+	# determine if the element count is valid
+	for num in elCount:
+		# if a element appears more than 5 times accross the blocks the solution is invalid 
+		if num > 5: 
+			return False
 
+	# check that any pair of elements is in two blocks
+	for block in range(10):
+		if blocks[block][1] != 0:
+			pair1 = str(blocks[block][0]) + str(blocks[block][1])
+			pairs[pair1] += 1
+		if blocks[block][2] != 0:
+			pair2 = str(blocks[block][1]) + str(blocks[block][2])
+			pairs[pair2] += 1
+			pair3 = str(blocks[block][0]) + str(blocks[block][2])
+			pairs[pair3] += 1
+		else:
+			# do nothing its a pair with a zero in it
+			pass
 
+	# determine if the pair count is valid
+	for num in pairs.values():
+		# if a given pair appears more then two times the solution is invlaid
+		if num > 2:
+			return False
+
+	# all validity tests passed
+	return True
 
 # appears to be working (somewhat tested)
 def find_first_empty(blocks):
@@ -50,27 +79,25 @@ def find_first_empty(blocks):
 			if blocks[block][i] == 0:
 				return block, i
 
+# prints blocks accordingly
 def print_it(blocks):
 	for block in range(10):
 		print(blocks[block])
 
-	
-
-
-
-# def bibd(blocks):
-# 	if is_complete(blocks):
-# 		return blocks
-# 	# blk is a block , i an index, this is the first block with a 0
-# 	blk, i = find_first_empty(blocks)
-# 	for num in range(max(blk)+1, nr_elements+1):
-# 		###
-# 		###:
-# 			###
-# 			###:
-# 				###
-# 		###
-# 	###
+# main logic 
+def bibd(blocks):
+	if is_complete(blocks):
+		return blocks
+	# blk is a block , i an index, this is the first block with a 0
+	blk, i = find_first_empty(blocks)
+	for num in range(max(blocks[blk])+1, nr_elements+1):
+		blocks[blk][i] = num
+		if is_valid(blocks):
+			result = bibd(blocks)
+			if is_complete(result):
+				return result
+		blocks[blk][i] = 0
+	return blocks
 
 
 # TESTING
@@ -80,6 +107,37 @@ def print_it(blocks):
 # print(is_complete(blocks))
 # print_it(blocks)
 
+# blocks[0][0] = 1
+# blocks[0][1] = 2
+# blocks[0][2] = 3
+
+
+# blocks[3][0] = 2
+# blocks[3][1] = 3
+
+# blocks[4][0] = 2
+# blocks[4][1] = 3
+
+# print(is_valid(blocks))
+
+# print_it(blocks)
+
+# it seems to backtrack starting here
+# [1, 2, 3]
+# [1, 2, 3]
+# [1, 3, 4]
+# [1, 3, 4]
+# [1, 4, 5]
+# [2, 4, 5]
+# [2, 4, 6]
+# [2, 5, 6]
+# [3, 5, 6]
+# [6, 0, 0]
+
+# run 20 trials and write to excel
+start_time = time.perf_counter()
+bibd(blocks)
+print(time.perf_counter() - start_time)
 
 
 
@@ -95,80 +153,4 @@ def print_it(blocks):
 
 
 
-
-# # magic square code
-
-# def is_complete(board):
-#     for i in range(3):
-#         for j in range(3):
-#             if board[i][j] == 0:
-#                 return False
-#     return True
-
-# def is_valid(board):
-#     numbers = []
-#     for i in range(3):
-#         for j in range(3):
-#             if board[i][j] != 0:
-#                 if board[i][j] in numbers:
-#                     #print('numbers not different')
-#                     return False
-#                 else:
-#                     numbers.append(board[i][j])
-#     #all numbers are different
-#     for i in range(3):
-#         if board[i][0] and board[i][1] and board[i][2]:
-#             if board[i][0]+board[i][1]+board[i][2]!=15:
-#                 #print('rows')
-#                 return False
-#     for j in range(3):
-#         if board[0][j] and board[1][j] and board[2][j]:
-#             if board[0][j]+board[1][j]+board[2][j] !=15:
-#                 #print('cols')
-#                 return False
-#     if board[0][0] and board[1][1] and board[2][2]:
-#         if board[0][0]+board[1][1]+board[2][2] != 15:
-#             #print('main diagonal')
-#             return False
-#     if board[0][2] and board[1][1] and board[2][0]:
-#         if board[0][2]+board[1][1]+board[2][0] != 15:
-#             #print('opp diagonal')
-#             return False
-#     return True
-
-# def find_first_free_cell(board):
-#     for i in range(3):
-#         for j in range(3):
-#             if board[i][j] == 0:
-#                 return i, j
-    
-
-# def print_it(matrix):
-#     for i in range(3):
-#         print('{} {} {}'.format(matrix[i][0], matrix[i][1], matrix[i][2]))
-
-# def back_track(matrix):
-#     if is_complete(matrix):
-#         return matrix
-#     i, j = find_first_free_cell(matrix)
-#     for num in range(1,9+1):
-#         matrix[i][j] = num
-#         if is_valid(matrix):
-#             result = back_track(matrix)
-#             if is_complete(result):
-#                 return result
-#         matrix[i][j] = 0
-#     return matrix
-    
-
-# matrix = [ [0 for i in range(3)] for j in range(3) ]
-# ##matrix[0][0] = 8
-# ##matrix[0][1] = 1
-# ##matrix[0][2] = 6
-# ##matrix[1][0] = 3
-# ##matrix[1][1] = 5
-# ##matrix[1][2] = 7
-# ##matrix[2][0] = 4
-# ##matrix[2][1] = 9
-# ##matrix[2][2] = 2
               
