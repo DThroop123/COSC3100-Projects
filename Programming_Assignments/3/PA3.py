@@ -7,10 +7,6 @@ Class - COSC 3100
 """
 
 import time
-import math
-
-# data structure to hold execution times
-times = [0]*20 
 
 # BIBD conditions
 nr_blocks = 10
@@ -106,38 +102,14 @@ def bibd(blocks):
 # print(find_first_empty(blocks))
 # print(is_complete(blocks))
 # print_it(blocks)
-
-# blocks[0][0] = 1
-# blocks[0][1] = 2
-# blocks[0][2] = 3
-
-
-# blocks[3][0] = 2
-# blocks[3][1] = 3
-
-# blocks[4][0] = 2
-# blocks[4][1] = 3
-
 # print(is_valid(blocks))
-
 # print_it(blocks)
-
-# it seems to backtrack starting here
-# [1, 2, 3]
-# [1, 2, 3]
-# [1, 3, 4]
-# [1, 3, 4]
-# [1, 4, 5]
-# [2, 4, 5]
-# [2, 4, 6]
-# [2, 5, 6]
-# [3, 5, 6]
 # [6, 0, 0]
 
-# run 20 trials and write to excel
+# trial runner
 start_time = time.perf_counter()
-bibd(blocks)
-print(time.perf_counter() - start_time)
+print_it(bibd(blocks))
+time.perf_counter() - start_time
 
 
 

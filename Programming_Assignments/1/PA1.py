@@ -5,7 +5,6 @@ Author - Daniel Throop
 Class - COSC 3100
 
 """
-	''
 import time
 import math
 import xlsxwriter
