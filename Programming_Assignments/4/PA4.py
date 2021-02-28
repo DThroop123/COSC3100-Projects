@@ -22,7 +22,6 @@ configuration = [[(0,0), (1,0), (0,1), (2,0)],
                  [(1,5), (2,5), (3,5), (4,5), (5,5)]
                  ]
 
-
 # initialzing matrix to be manipulated
 matrix = [[0 for j in range(dj)] for i in range(di)]
 matrix[0][0]=4
@@ -33,41 +32,17 @@ matrix[3][4]=3
 matrix[4][4]=5
 matrix[5][2]=1	
 
-# fills board with 1's for testing purposes
-# for i in range(6):
-# 	for j in range(6):
-# 		matrix[i][j] = 1
-
-# testing if find empty works
-# matrix[5][5] = 0
-
-# testing valid so far
-# matrix[1][1] = 4 
-# matrix[1][2] = 4
-# matrix[1][3] = 4 
-# matrix[2][3] = 4
-# matrix[1][0] = 4
-# matrix[3][1] = 4
-# matrix[2][1] = 4
-# matrix[0][2] = 5
-# matrix[2][4] = 5
-# matrix[3][2] = 3	
-
-# TESTED
+# TESTED - working
 # resets all elements of a list to zero 
 def resetList(listy):
 	for i in range(len(listy)):
 		listy[i] = 0
 	return listy
 
-
-# NOT TESTED ((a) and (b) should be working)
+# TESTED - working
 def valid_so_far(board):
 	global countList
 
-	# TESTED (should be working)
-	# # checks
-	# # (a) no two same non-zero integers are next to each other, even diagonally 
 	for row in range(6):
 		for col in range(6):
 			# don't do anything
@@ -83,10 +58,6 @@ def valid_so_far(board):
 						# compare with current position
 						if board[row][col] == board[chckRow][chckCol]:
 							return False
-
-	# TESTED (should be working)
-	# # (b) each area contains only numbers larger than 0 once and not larger than 
-	# # the number of cells in the area.
 
 	for block in configuration:
 		for tup in block:
@@ -110,7 +81,7 @@ def valid_so_far(board):
 	return True
 
 # TESTED - working
-# returns wehther a given check cell is valid to be checked
+# returns whether a given check cell is valid to be checked
 def valid_pos(row, col):
 	if row < 0 or row > 5 or col < 0 or col > 5:
 		return False
@@ -154,7 +125,3 @@ def puzzSolver(board):
 
 # TESTING
 print_it(puzzSolver(matrix))
-
-
-
-
