@@ -1,5 +1,5 @@
 """
-babyBullet.py - developing a skip list with one additional level
+babyBullet.py - developing a skip list with one additional level (baby bullet)
 Date - 02/29/21 
 Author - Daniel Throop
 Class - COSC 3100
